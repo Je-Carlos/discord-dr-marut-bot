@@ -66,6 +66,19 @@ If Docker is not available locally, the Testcontainers-backed integration test i
 - `docs/product`: product-level documents
 - `docs/runbooks`: operational runbooks
 
+## GitHub Secrets
+
+For GitHub Actions, the workflow is prepared to read these repository or organization secrets:
+
+- `DRMARUT_DISCORD_ENABLED`
+- `DRMARUT_DISCORD_TOKEN`
+- `DRMARUT_DISCORD_GUILD_ID`
+- `DRMARUT_DB_URL`
+- `DRMARUT_DB_USERNAME`
+- `DRMARUT_DB_PASSWORD`
+
+Use GitHub Secrets for CI and future deployment automation. For local execution, continue using environment variables on your machine.
+
 ## Security note
 
 Secrets must not be committed. The legacy `src/main/resources/config.properties` file is not part of the new runtime path and should not be used as the source of truth for credentials.

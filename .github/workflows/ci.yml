@@ -10,6 +10,13 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      DRMARUT_DISCORD_ENABLED: ${{ secrets.DRMARUT_DISCORD_ENABLED }}
+      DRMARUT_DISCORD_TOKEN: ${{ secrets.DRMARUT_DISCORD_TOKEN }}
+      DRMARUT_DISCORD_GUILD_ID: ${{ secrets.DRMARUT_DISCORD_GUILD_ID }}
+      DRMARUT_DB_URL: ${{ secrets.DRMARUT_DB_URL }}
+      DRMARUT_DB_USERNAME: ${{ secrets.DRMARUT_DB_USERNAME }}
+      DRMARUT_DB_PASSWORD: ${{ secrets.DRMARUT_DB_PASSWORD }}
 
     steps:
       - name: Checkout repository
