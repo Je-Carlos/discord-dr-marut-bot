@@ -1,112 +1,112 @@
 # Dr Marut
 
-Dr Marut is a Discord bot focused on Pathfinder 2e rules lookup. This repository now provides the foundation bootstrap for the application: Spring Boot, JDA integration boundary, PostgreSQL + Flyway, Actuator health checks, CI, and the initial docs/ADR/spec structure described in `.codex/AGENTS.md`.
+Dr Marut é um bot para Discord focado em consulta de regras do Pathfinder 2e. Este repositório contém a base da aplicação: Spring Boot, integração com JDA, PostgreSQL + Flyway, health checks via Actuator, CI e a estrutura inicial de documentação (ADR/specs).
 
-## Requirements
+## Requisitos
 
 - JDK 21
 - Maven 3.9+
-- Docker Desktop or another local Docker runtime
+- Docker Desktop ou outro runtime Docker local
 
-## Clone and download
+## Clone e download
 
-Clone the repository with the PF2E submodule already initialized:
+Clone o repositório com o submódulo PF2E já inicializado:
 
 ```bash
 git clone --recurse-submodules https://github.com/Je-Carlos/discord-dr-marut-bot.git
 cd discord-dr-marut-bot
 ```
 
-If you already cloned the repository without submodules, run:
+Se você já clonou o repositório sem os submódulos, execute:
 
 ```bash
 git submodule update --init --recursive
 ```
 
-## PF2E data submodule
+## Submódulo de dados PF2E
 
-The `pf2e-data/` directory is a Git submodule that points to the official PF2E repository:
+O diretório `pf2e-data/` é um submódulo Git que aponta para o repositório oficial do PF2E:
 
 ```bash
 git submodule status
 ```
 
-To pull the latest submodule content configured by this repository:
+Para baixar o conteúdo mais recente do submódulo configurado neste repositório:
 
 ```bash
 git submodule update --init --recursive
 ```
 
-To fetch newer upstream changes inside the submodule on purpose:
+Para buscar mudanças mais novas do upstream dentro do submódulo:
 
 ```bash
 git submodule update --remote --merge
 ```
 
-Use `--remote --merge` only when you intentionally want to advance the pinned PF2E revision and then commit the new submodule pointer in this repository.
+Use `--remote --merge` apenas quando quiser avançar intencionalmente a revisão fixada do PF2E e depois comitar o novo ponteiro do submódulo neste repositório.
 
-## Local bootstrap
+## Bootstrap local
 
-1. Start PostgreSQL:
+1. Inicie o PostgreSQL:
 
 ```bash
 docker compose up -d
 ```
 
-2. Export environment variables if you want Discord enabled:
+2. Exporte as variáveis de ambiente se quiser habilitar o Discord:
 
 ```bash
 set DRMARUT_DISCORD_ENABLED=true
-set DRMARUT_DISCORD_TOKEN=your-token
-set DRMARUT_DISCORD_GUILD_ID=your-guild-id
+set DRMARUT_DISCORD_TOKEN=seu-token
+set DRMARUT_DISCORD_GUILD_ID=id-do-seu-servidor
 ```
 
-Discord is disabled by default in the `local` profile.
+O Discord vem desabilitado por padrão no perfil `local`.
 
-3. Run the application:
+3. Execute a aplicação:
 
 ```bash
 mvn spring-boot:run
 ```
 
-## Default local configuration
+## Configuração local padrão
 
-- Profile: `local`
+- Perfil: `local`
 - JDBC URL: `jdbc:postgresql://localhost:5432/drmarut`
-- User: `drmarut`
-- Password: `drmarut`
-- Actuator health: `http://localhost:8080/actuator/health`
-- Actuator info: `http://localhost:8080/actuator/info`
+- Usuário: `drmarut`
+- Senha: `drmarut`
+- Health check: `http://localhost:8080/actuator/health`
+- Info: `http://localhost:8080/actuator/info`
 
-## Tests
+## Testes
 
-The project uses:
+O projeto utiliza:
 
 - JUnit 5
 - Spring Boot Test
-- Testcontainers for PostgreSQL integration tests
+- Testcontainers para testes de integração com PostgreSQL
 
-Run:
+Execute:
 
 ```bash
 mvn test
 ```
 
-If Docker is not available locally, the Testcontainers-backed integration test is skipped while the unit and configuration tests still run.
+Se o Docker não estiver disponível localmente, o teste de integração com Testcontainers é ignorado, enquanto os testes unitários e de configuração continuam rodando.
 
-## Project structure
+## Estrutura do projeto
 
-- `src/main/java/com/drmarut`: application bootstrap and feature packages
-- `src/main/resources`: Spring profiles and Flyway migrations
-- `pf2e-data`: PF2E upstream data repository tracked as a submodule
-- `docs/adr`: architecture decisions
-- `docs/specs`: feature specs
-- `docs/product`: product-level documents
-- `docs/runbooks`: operational runbooks
+- `src/main/java/com/drmarut`: bootstrap da aplicação e pacotes de features
+- `src/main/resources`: perfis Spring e migrações Flyway
+- `pf2e-data`: repositório de dados PF2E upstream, rastreado como submódulo
+- `docs/adr`: decisões de arquitetura
+- `docs/specs`: especificações de features
+- `docs/product`: documentos de produto
+- `docs/runbooks`: runbooks operacionais
 
-## GitHub Secrets
+## Secrets do GitHub
 
-For GitHub Actions, the workflow is prepared to read these repository or organization secrets:
+Para o GitHub Actions, o workflow está preparado para ler estes secrets do repositório ou organização:
 
 - `DRMARUT_DISCORD_ENABLED`
 - `DRMARUT_DISCORD_TOKEN`
@@ -115,8 +115,8 @@ For GitHub Actions, the workflow is prepared to read these repository or organiz
 - `DRMARUT_DB_USERNAME`
 - `DRMARUT_DB_PASSWORD`
 
-Use GitHub Secrets for CI and future deployment automation. For local execution, continue using environment variables on your machine.
+Use GitHub Secrets para CI e automação de deploy. Para execução local, continue usando variáveis de ambiente na sua máquina.
 
-## Security note
+## Nota de segurança
 
-Secrets must not be committed. The legacy `src/main/resources/config.properties` file is not part of the new runtime path and should not be used as the source of truth for credentials.
+Secrets não devem ser commitados. O arquivo legado `src/main/resources/config.properties` não faz parte do caminho de execução atual e não deve ser usado como fonte de credenciais.
