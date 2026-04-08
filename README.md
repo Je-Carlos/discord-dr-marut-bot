@@ -8,6 +8,43 @@ Dr Marut is a Discord bot focused on Pathfinder 2e rules lookup. This repository
 - Maven 3.9+
 - Docker Desktop or another local Docker runtime
 
+## Clone and download
+
+Clone the repository with the PF2E submodule already initialized:
+
+```bash
+git clone --recurse-submodules https://github.com/Je-Carlos/discord-dr-marut-bot.git
+cd discord-dr-marut-bot
+```
+
+If you already cloned the repository without submodules, run:
+
+```bash
+git submodule update --init --recursive
+```
+
+## PF2E data submodule
+
+The `pf2e-data/` directory is a Git submodule that points to the official PF2E repository:
+
+```bash
+git submodule status
+```
+
+To pull the latest submodule content configured by this repository:
+
+```bash
+git submodule update --init --recursive
+```
+
+To fetch newer upstream changes inside the submodule on purpose:
+
+```bash
+git submodule update --remote --merge
+```
+
+Use `--remote --merge` only when you intentionally want to advance the pinned PF2E revision and then commit the new submodule pointer in this repository.
+
 ## Local bootstrap
 
 1. Start PostgreSQL:
@@ -61,6 +98,7 @@ If Docker is not available locally, the Testcontainers-backed integration test i
 
 - `src/main/java/com/drmarut`: application bootstrap and feature packages
 - `src/main/resources`: Spring profiles and Flyway migrations
+- `pf2e-data`: PF2E upstream data repository tracked as a submodule
 - `docs/adr`: architecture decisions
 - `docs/specs`: feature specs
 - `docs/product`: product-level documents
