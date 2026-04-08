@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: ${DRMARUT_DB_URL:jdbc:postgresql://localhost:5432/drmarut}
+    username: ${DRMARUT_DB_USERNAME:drmarut}
+    password: ${DRMARUT_DB_PASSWORD:drmarut}
+  flyway:
+    enabled: true

@@ -41,3 +41,6 @@ build/
 
 ### Secrets ###
 src/main/resources/config.properties
+.env
+.env.*
+!.env.example

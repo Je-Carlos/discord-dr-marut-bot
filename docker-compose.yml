@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: drmarut-postgres
+    environment:
+      POSTGRES_DB: drmarut
+      POSTGRES_USER: drmarut
+      POSTGRES_PASSWORD: drmarut
+    ports:
+      - "5432:5432"
+    volumes:
+      - drmarut-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U drmarut -d drmarut"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  drmarut-postgres-data:
